@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Number guessing game</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Number guessing game</h1>
+
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+
+    <div class="form">
+      <label for="guessField">Enter a guess: </label>
+			<input type="text" id="guessField" class="guessField">
+      <input type="button" value="Submit guess" 
+			onClick="getNumber(getElementById('guessField').value)" class="guessSubmit">
+			<input type="button" value="Reset" onClick="reset()"/>
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses" id="guesses"></p>
+      <p class="result" id="result"></p>
+      <p class="lowOrHi" id="lowOrHi"></p>
+			 <p class="message" id="message"></p>			
+    </div>
+
+    <script>
+      // Your JavaScript goes heres
+			var randomNumber = generateRandomNumber();
+			var wrongNumberStored = [];
+			alert('Number are : ' + randomNumber);
+
+			function generateRandomNumber(){
+				return (Math.floor(Math.random() * 100) + 1);
+			}
+			function reset(){
+				document.getElementById('guesses').innerHTML = '';
+				document.getElementById('result').innerHTML = '';
+				document.getElementById('lowOrHi').innerHTML='';
+				document.getElementById('message').innerHTML='';
+				document.getElementById('guessField').value ='';
+				wrongNumberStored=[];
+				randomNumber = generateRandomNumber();
+				alert('New number are : ' +randomNumber);
+			}
+
+			function getNumber(param) {
+				if (wrongNumberStored.length != 10) {
+					if (param != randomNumber) {
+						wrongNumberStored.push(param)
+						document.getElementById('guesses').innerHTML = 'Previous guesses:' + wrongNumberStored;
+						document.getElementById('result').innerHTML = 'WRONG!!!';	
+						if (param < randomNumber) {
+							document.getElementById('lowOrHi').innerHTML = 'Last guess was too low!';	
+						}		
+						else {
+							document.getElementById('lowOrHi').innerHTML = 'Last guess was too high!';
+						}			
+					}
+					else if (param == randomNumber){	
+						document.getElementById('result').innerHTML = 'CORRECT!!!';										
+					}					
+			}
+			 else {
+					document.getElementById('message').innerHTML = 'No chance left !!!';	
+			}
+				}	
+    </script>
+  </body>
+</html>
